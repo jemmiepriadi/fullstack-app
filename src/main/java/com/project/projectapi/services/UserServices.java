@@ -1,26 +1,26 @@
 package com.project.projectapi.services;
 
-import com.project.projectapi.model.entities.Customer;
-import com.project.projectapi.repos.CustomerRepository;
+import com.project.projectapi.model.entities.User;
+import com.project.projectapi.repos.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class CustomerServices {
+public class UserServices {
     @Autowired
-    private CustomerRepository customerRepository;
+    private UserRepository customerRepository;
 
-    public Customer save(Customer Customer){
+    public User save(User Customer){
         return customerRepository.save(Customer);
     }
 
-    public Customer getById(long id){
+    public User getById(long id){
         return customerRepository.findById(id).get();
     }
 
-    public Iterable<Customer> findAll(){
+    public Iterable<User> findAll(){
         return customerRepository.findAll();
     }
 
