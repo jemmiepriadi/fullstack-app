@@ -1,7 +1,7 @@
 package com.project.projectapi.controller;
 
 import com.project.projectapi.model.entities.User;
-import com.project.projectapi.services.UserServices;
+import com.project.projectapi.services.ServiceImpl.UserServices.UserServicesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserController {
     @Autowired
-    private UserServices userServices;
+    private UserServicesImpl userServices;
 
     @PostMapping
     public User create(@RequestBody User Customer) {
