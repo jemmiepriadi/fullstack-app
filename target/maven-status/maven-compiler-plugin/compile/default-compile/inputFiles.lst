@@ -12,6 +12,7 @@
 /Users/jemmiepriadi/Documents/Spring/project-api/Backend Test/src/main/java/com/project/projectapi/model/entities/Contact.java
 /Users/jemmiepriadi/Documents/Spring/project-api/Backend Test/src/main/java/com/project/projectapi/services/ServiceImpl/UserServices/UserServicesImpl.java
 /Users/jemmiepriadi/Documents/Spring/project-api/Backend Test/src/main/java/com/project/projectapi/controller/Jobs/JobsController.java
+/Users/jemmiepriadi/Documents/Spring/project-api/Backend Test/src/main/java/com/project/projectapi/dto/PaginationDTO.java
 /Users/jemmiepriadi/Documents/Spring/project-api/Backend Test/src/main/java/com/project/projectapi/repos/UserRepository.java
 /Users/jemmiepriadi/Documents/Spring/project-api/Backend Test/src/main/java/com/project/projectapi/services/ServiceImpl/AuthServices/AuthServiceImpl.java
 /Users/jemmiepriadi/Documents/Spring/project-api/Backend Test/src/main/java/com/project/projectapi/services/ServiceImpl/WebClient/ReaderConsumerServiceImpl.java

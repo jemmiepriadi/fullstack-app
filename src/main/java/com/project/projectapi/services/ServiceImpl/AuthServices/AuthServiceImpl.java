@@ -57,7 +57,7 @@ public class AuthServiceImpl implements AuthService {
             Long idUser = jwt.getClaim("userId").asLong();
             User user = userRepository.findWithId(idUser);
             if(Objects.isNull(user)){
-
+                throw new TokenExpiredException("token has expired");
             }
         } catch (TokenExpiredException tokenExpiredException){
             System.out.println("token has expired");

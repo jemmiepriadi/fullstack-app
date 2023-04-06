@@ -7,6 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface JobsService {
-    List<JobsDTO> getJobs(JobsRequestDTO jobsRequestDTO);
-    JobsDTO getJobDetailById(long id);
+    List<JobsDTO> getJobs(JobsRequestDTO jobsRequestDTO, Integer page, Integer size);
+    JobsDTO getJobDetailById(String id);
 }
