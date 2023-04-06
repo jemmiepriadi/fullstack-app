@@ -72,8 +72,19 @@ public class JobsController {
 
     @GetMapping("/jobList/{id}")
     public ResponseDTO<JobsDTO> getJobsById(
-            @PathVariable String id
+            @PathVariable String id,
+            HttpServletRequest httpServletRequest
     ){
+        User user = new User();
+        try {
+            String token = cookieManagerServices.getToken(httpServletRequest);
+            if (StringUtils.isEmpty(token)){
+                throw new RuntimeException("token expired");
+            }
+            user = authService.getUserFromToken(token);
+        } catch(Exception e) {
+            log.info("Cookie token is null");
+        }
         JobsDTO jobsDTO = jobsService.getJobDetailById(id);
         return ResponseDTO.ok(jobsDTO);
     }
