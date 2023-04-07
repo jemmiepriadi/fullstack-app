@@ -52,19 +52,23 @@ public class AuthServiceImpl implements AuthService {
         JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer("Dans-Multi-Pro")
                 .build();
+        User user = new User();
         try{
             DecodedJWT jwt = verifier.verify(token);
             Long idUser = jwt.getClaim("userId").asLong();
-            User user = userRepository.findWithId(idUser);
+            user = userRepository.findWithId(idUser);
+
             if(Objects.isNull(user)){
                 throw new TokenExpiredException("token has expired");
             }
+//            return user;
         } catch (TokenExpiredException tokenExpiredException){
             System.out.println("token has expired");
             throw new TokenExpiredException(tokenExpiredException.getMessage());
         } catch (JWTVerificationException e){
             throw new JWTVerificationException(e.getMessage());
         }
-        return null;
+        if(user == null)return null;
+        return user;
     }
 }

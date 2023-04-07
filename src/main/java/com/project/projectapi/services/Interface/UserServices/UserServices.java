@@ -1,6 +1,7 @@
 package com.project.projectapi.services.Interface.UserServices;
 
 import com.project.projectapi.model.entities.User;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -11,4 +12,6 @@ public interface UserServices {
     boolean isPasswordMatch(User user, String password);
 
     User registerEmail(String email, String password, ZonedDateTime createdAt);
+
+    void setCurrentUser(HttpServletRequest httpServletRequest);
 }

@@ -8,22 +8,23 @@ import com.project.projectapi.model.entities.User;
 import com.project.projectapi.services.Interface.AuthServices.AuthService;
 import com.project.projectapi.services.Interface.CookieManagerServices;
 import com.project.projectapi.services.Interface.UserServices.UserServices;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin
 public class LoginController {
 
     private AuthService authService;
@@ -45,6 +46,7 @@ public class LoginController {
             @RequestBody LoginRequestDTO loginRequestDTO,
             HttpServletResponse res
     ){
+
         if (loginRequestDTO.getEmail() == null) {
             throw BaseException.builder()
                     .message("Email can't be empty.")
@@ -70,6 +72,27 @@ public class LoginController {
         String token  = authService.createToken(user);
         cookieManagerServices.setToken(res, token);
         return ResponseDTO.ok(LoginResponseDTO.builder().token(token).build());
+    }
+
+    @GetMapping("/me")
+    public ResponseDTO<User> test(
+            HttpServletRequest httpServletRequest,
+            @RequestParam(required = false) String token
+    ){
+        User user = new User();
+        try {
+            if(token == null)token = cookieManagerServices.getToken(httpServletRequest);
+            if (StringUtils.isEmpty(token)){
+                String header = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+
+                if(StringUtils.isEmpty(header)) return null;
+                token = header.substring(header.indexOf("Bearer") + "Bearer ".length());
+            }
+            user = authService.getUserFromToken(token);
+        } catch(Exception e) {
+//            log.info("Cookie token is null");
+        }
+        return ResponseDTO.ok(user);
     }
     @PostMapping("/register")
     public ResponseDTO<User> register(

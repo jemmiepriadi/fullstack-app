@@ -3,6 +3,7 @@ package com.project.projectapi.services.ServiceImpl.UserServices;
 import com.project.projectapi.model.entities.User;
 import com.project.projectapi.repos.UserRepository;
 import com.project.projectapi.services.Interface.UserServices.UserServices;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,10 +57,14 @@ public class UserServicesImpl implements UserServices {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
-//        user.setCreatedAt(createdAt);
-//        user.setDeletedAt(null);
-//        user.setUpdatedAt(createdAt);
+        user.setCreatedAt(createdAt);
+        user.setUpdatedAt(createdAt);
         userRepository.save(user);
         return null;
+    }
+
+    @Override
+    public void setCurrentUser(HttpServletRequest httpServletRequest) {
+
     }
 }
