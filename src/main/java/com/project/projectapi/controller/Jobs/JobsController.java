@@ -1,5 +1,6 @@
 package com.project.projectapi.controller.Jobs;
 
+import com.project.projectapi.Exception.BaseException;
 import com.project.projectapi.dto.Jobs.JobsDTO;
 import com.project.projectapi.dto.Jobs.JobsRequestDTO;
 import com.project.projectapi.dto.PaginationDTO;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +51,7 @@ public class JobsController {
         User user = new User();
         try {
             String token = cookieManagerServices.getToken(httpServletRequest);
+
             if (StringUtils.isEmpty(token)){
                 String header = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
 
@@ -58,6 +61,9 @@ public class JobsController {
             user = authService.getUserFromToken(token);
         } catch(Exception e) {
             log.info("Cookie token is null");
+            log.info(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+
         }
         List<JobsDTO> jobsDTOs = jobsService.getJobs(jobsRequestDTO, page, size);
         PaginationDTO<JobsDTO> paginationDTO = new PaginationDTO<>();
@@ -83,7 +89,8 @@ public class JobsController {
             }
             user = authService.getUserFromToken(token);
         } catch(Exception e) {
-            log.info("Cookie token is null");
+            log.info(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
         JobsDTO jobsDTO = jobsService.getJobDetailById(id);
         return ResponseDTO.ok(jobsDTO);

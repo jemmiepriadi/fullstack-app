@@ -90,6 +90,7 @@ public class LoginController {
             }
             user = authService.getUserFromToken(token);
         } catch(Exception e) {
+            throw new RuntimeException(e.getMessage());
 //            log.info("Cookie token is null");
         }
         return ResponseDTO.ok(user);

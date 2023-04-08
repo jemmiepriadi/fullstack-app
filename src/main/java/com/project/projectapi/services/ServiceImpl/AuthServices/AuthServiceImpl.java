@@ -61,7 +61,6 @@ public class AuthServiceImpl implements AuthService {
             if(Objects.isNull(user)){
                 throw new TokenExpiredException("token has expired");
             }
-//            return user;
         } catch (TokenExpiredException tokenExpiredException){
             System.out.println("token has expired");
             throw new TokenExpiredException(tokenExpiredException.getMessage());
