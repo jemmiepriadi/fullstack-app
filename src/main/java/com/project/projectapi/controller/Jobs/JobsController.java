@@ -84,9 +84,6 @@ public class JobsController {
         User user = new User();
         try {
             String token = cookieManagerServices.getToken(httpServletRequest);
-            if (StringUtils.isEmpty(token)){
-                throw new RuntimeException("token expired");
-            }
             user = authService.getUserFromToken(token);
         } catch(Exception e) {
             log.info(e.getMessage());

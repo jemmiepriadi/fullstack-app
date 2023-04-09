@@ -24,7 +24,7 @@ public class AuthServiceImpl implements AuthService {
     @Value("123456")
     private String jwtSecret;
 
-    @Value("15000")
+    @Value("10000")
     private Long expiresInSeconds;
 
     public AuthServiceImpl(UserRepository userRepository) {
@@ -55,14 +55,11 @@ public class AuthServiceImpl implements AuthService {
         User user = new User();
         try{
             DecodedJWT jwt = verifier.verify(token);
+
             Long idUser = jwt.getClaim("userId").asLong();
             user = userRepository.findWithId(idUser);
 
-            if(Objects.isNull(user)){
-                throw new TokenExpiredException("token has expired");
-            }
         } catch (TokenExpiredException tokenExpiredException){
-            System.out.println("token has expired");
             throw new TokenExpiredException(tokenExpiredException.getMessage());
         } catch (JWTVerificationException e){
             throw new JWTVerificationException(e.getMessage());
