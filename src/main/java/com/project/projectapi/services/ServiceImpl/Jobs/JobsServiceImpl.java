@@ -41,8 +41,10 @@ public class JobsServiceImpl implements JobsService {
         if(page == null && size !=null){
             page = 1;
         }
+        System.out.println( "hahaha");
 
         List<JobsDTO> jobsDTOS = jobsDTOFlux.collect(Collectors.toList()).block();
+
         if (!Objects.isNull(jobsRequestDTO)){
             jobsDTOS = jobsDTOS.stream().filter(jobsDTO -> !StringUtils.isEmpty(jobsRequestDTO.getDescription()) ? jobsDTO.getDescription().toLowerCase().contains(jobsRequestDTO.getDescription().toLowerCase()) : jobsDTO.getDescription()== jobsDTO.getDescription()).filter(jobsDTO -> !StringUtils.isEmpty(jobsRequestDTO.getLocation()) ? jobsDTO.getLocation().toLowerCase().contains(jobsRequestDTO.getLocation().toLowerCase()) : jobsDTO.getLocation()== jobsDTO.getLocation()).filter(jobsDTO -> jobsRequestDTO.getFull_time() == null ? jobsDTO.getType() == "Full Time" || jobsDTO.getType() != "Full Time" : BooleanUtils.isTrue(jobsRequestDTO.getFull_time()) ? jobsDTO.getType() != "Full Time" : jobsDTO.getType() == "Full Time").collect(Collectors.toList());
         }
